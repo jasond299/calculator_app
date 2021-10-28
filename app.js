@@ -10,6 +10,11 @@ const lower = document.querySelector('[data-lower]')
 
 let upperdisplay = '';
 let lowerdisplay = '0';
+let firstnumber;
+let secondnumber;
+let result
+let state = false;
+
 
 function add(x, y) {
     return x + y;
@@ -41,7 +46,7 @@ function operate(number1, number2, operation) {
         //multiply(number1, number2);
         return number1 * number2;
     }
-    if (operation === '%') {
+    if (operation === '÷') {
         //divide(number1, number2);
         return number1 / number2;
     }
@@ -59,6 +64,14 @@ function update_lowerDisplay(x) {
 
 }
 
+function evaluate() {
+    firstnumber = parseFloat(upperdisplay);
+    secondnumber = parseFloat(lowerdisplay);
+    let operator = upperdisplay.charAt(upperdisplay.length - 2);
+
+    result = operate(firstnumber, secondnumber, operator);
+}
+
 
 number_button.forEach(button => {
     button.addEventListener('click', () => {
@@ -66,17 +79,32 @@ number_button.forEach(button => {
         if (lowerdisplay === '0') {
             lowerdisplay = button.textContent;
             update_lowerDisplay('');
+
         }
 
-        if (upperdisplay.charAt(upperdisplay.length - 2) === '+' ||
+
+
+
+        else if (upperdisplay.charAt(upperdisplay.length - 2) === '+' ||
             upperdisplay.charAt(upperdisplay.length - 2) === '-' ||
             upperdisplay.charAt(upperdisplay.length - 2) === 'x' ||
             upperdisplay.charAt(upperdisplay.length - 2) === '÷') {
 
-            lowerdisplay = '';
+            if (state === false) {
+                lowerdisplay = '';
+                state = true;
+            }
+
             update_lowerDisplay(button.textContent);
 
 
+        }
+
+        else if (upperdisplay.charAt(upperdisplay.length - 1) === '=') {
+            if (state === false) {
+                lowerdisplay = '';
+                state = true;
+            }
         }
 
         else {
@@ -89,9 +117,8 @@ number_button.forEach(button => {
 operation_button.forEach(button => {
     button.addEventListener('click', () => {
         //console.log(button.textContent);
-        if (upperdisplay.charAt(upperdisplay.length - 1) === button.textContent) {
-            return;
-        }
+
+
 
         if (upperdisplay.charAt(upperdisplay.length - 1) === '+' ||
             upperdisplay.charAt(upperdisplay.length - 1) === '-' ||
@@ -114,7 +141,9 @@ operation_button.forEach(button => {
 
 clear_button.addEventListener('click', () => {
     lowerdisplay = '0';
+    upperdisplay = '';
     update_lowerDisplay('');
+    update_upperDisplay('');
 })
 
 
@@ -133,7 +162,15 @@ del_button.addEventListener('click', () => {
 })
 
 equal_button.addEventListener('click', () => {
-    console.log("hello");
+    evaluate();
+    update_upperDisplay(secondnumber + ' ' + '=')
+    lowerdisplay = '';
+    update_lowerDisplay(result);
+    state = false;
+    console.log(result);
+
+
+    //console.log(firstnumber + secondnumber);
 })
 
 decimal.addEventListener('click', () => {
@@ -145,8 +182,8 @@ decimal.addEventListener('click', () => {
     }
 })
 
-console.log(add(2, 3));
-console.log(subtract(2, 3));
+console.log(add(2.14, 3));
+console.log(subtract(parseFloat("2.05"), 3));
 console.log(multiply(2, 3));
-console.log(divide(6, 3));
+console.log(divide(5.0, 2.5));
 console.log(operate(4, 5, '%'));
