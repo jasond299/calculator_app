@@ -187,7 +187,7 @@ equal_button.addEventListener('click', () => {
     console.log(result);
 
 
-    //console.log(firstnumber + secondnumber);
+
 })
 
 decimal.addEventListener('click', () => {
