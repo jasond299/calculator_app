@@ -12,7 +12,7 @@ let upperdisplay = '';
 let lowerdisplay = '0';
 let firstnumber;
 let secondnumber;
-let result
+let result;
 let state = false;
 
 
@@ -70,6 +70,9 @@ function evaluate() {
     let operator = upperdisplay.charAt(upperdisplay.length - 2);
 
     result = operate(firstnumber, secondnumber, operator);
+    result = result.toPrecision(12);
+    result = result.toString();
+    result = parseFloat(result);
 }
 
 function clear() {
@@ -82,7 +85,7 @@ function clear() {
 
 number_button.forEach(button => {
     button.addEventListener('click', () => {
-        //console.log(button.textContent);
+
         if (lowerdisplay === '0') {
             lowerdisplay = button.textContent;
             update_lowerDisplay('');
@@ -199,8 +202,3 @@ decimal.addEventListener('click', () => {
     }
 })
 
-console.log(add(2.14, 3));
-console.log(subtract(parseFloat("2.05"), 3));
-console.log(multiply(2, 3));
-console.log(divide(5.0, 2.5));
-console.log(operate(4, 5, '+'));

@@ -15,6 +15,7 @@ html{
 
 .header {
     text-align: center;
+    font-size: 32px;
 }
 
 .container{
@@ -25,7 +26,7 @@ html{
     grid-template-rows: minmax(120px, auto) repeat(5, 80px);
     height: 550px;
     width: 350px;
-    margin-top: 100px;
+    margin-top: 70px;
     margin-left: auto;
     margin-right: auto;
     background-color: wheat;
@@ -76,4 +77,18 @@ html{
     
     font-size: 30px;
     overflow: auto;
+}
+
+.footer {
+    font-size: 18px;
+    font-family: arial;
+    margin-top: 40px;
+    text-align: center;
+}
+
+a {
+    font-size: 18px;
+    font-family: arial;
+    text-decoration: none;
+    
 }
