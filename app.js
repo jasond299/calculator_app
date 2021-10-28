@@ -72,6 +72,13 @@ function evaluate() {
     result = operate(firstnumber, secondnumber, operator);
 }
 
+function clear() {
+    lowerdisplay = '0';
+    upperdisplay = '';
+    update_lowerDisplay('');
+    update_upperDisplay('');
+}
+
 
 number_button.forEach(button => {
     button.addEventListener('click', () => {
@@ -79,10 +86,16 @@ number_button.forEach(button => {
         if (lowerdisplay === '0') {
             lowerdisplay = button.textContent;
             update_lowerDisplay('');
+            return;
 
         }
 
-
+        if (upperdisplay.charAt(upperdisplay.length - 1) === '=') {
+            lowerdisplay = button.textContent;
+            upperdisplay = '';
+            update_lowerDisplay('');
+            update_upperDisplay('');
+        }
 
 
         else if (upperdisplay.charAt(upperdisplay.length - 2) === '+' ||
@@ -118,7 +131,14 @@ operation_button.forEach(button => {
     button.addEventListener('click', () => {
         //console.log(button.textContent);
 
+        if (state === true) {
+            evaluate();
+            update_upperDisplay(result + ' ' + button.textContent + '')
+            lowerdisplay = '';
+            update_lowerDisplay(result);
+            state = false;
 
+        }
 
         if (upperdisplay.charAt(upperdisplay.length - 1) === '+' ||
             upperdisplay.charAt(upperdisplay.length - 1) === '-' ||
@@ -140,10 +160,7 @@ operation_button.forEach(button => {
 })
 
 clear_button.addEventListener('click', () => {
-    lowerdisplay = '0';
-    upperdisplay = '';
-    update_lowerDisplay('');
-    update_upperDisplay('');
+    clear();
 })
 
 
@@ -186,4 +203,4 @@ console.log(add(2.14, 3));
 console.log(subtract(parseFloat("2.05"), 3));
 console.log(multiply(2, 3));
 console.log(divide(5.0, 2.5));
-console.log(operate(4, 5, '%'));
+console.log(operate(4, 5, '+'));
